@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кафе «Loft» — Старые Атаги</title>
+
+    <!-- Google Fonts: Montserrat Bold + Nunito Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* === СВЕТЛАЯ ТЕМА (день) === */
+            --bg-primary: #FBF6F0;
+            --bg-secondary: #F0E8DB;
+            --bg-card: #FFFFFF;
+            --bg-card-alt: #F5EFE6;
+            --text-primary: #2B2318;
+            --text-secondary: #5C4F3D;
+            --text-muted: #8B7B68;
+            --accent-yellow: #E8A838;
+            --accent-yellow-hover: #D4952A;
+            --accent-green: #5C8A67;
+            --accent-green-hover: #4A7354;
+            --brick: #C67B5C;
+            --brick-dark: #A85D40;
+            --border-color: #D9CEC0;
+            --shadow-card: 0 8px 32px rgba(60, 40, 20, 0.10);
+            --shadow-button: 0 4px 16px rgba(200, 150, 80, 0.35);
+            --shadow-button-green: 0 4px 18px rgba(90, 130, 100, 0.35);
+            --overlay: rgba(30, 20, 10, 0.55);
+            --header-bg: rgba(251, 246, 240, 0.88);
+            --header-blur: blur(18px);
+            --star-color: #E8A838;
+            --star-empty: #D9CEC0;
+            --ripple-color: rgba(255, 255, 255, 0.5);
+            --input-bg: #FFFFFF;
+            --input-border: #D9CEC0;
+            --input-focus: #C67B5C;
+            --modal-bg: #FFFFFF;
+            --badge-bg: #F0E8DB;
+            --brick-pattern-opacity: 0.04;
+            --hero-overlay-start: rgba(20, 15, 8, 0.45);
+            --hero-overlay-end: rgba(20, 15, 8, 0.65);
+        }
+
+        [data-theme="dark"] {
+            /* === ТЁМНАЯ ТЕМА (ночь) === */
+            --bg-primary: #1E1C1A;
+            --bg-secondary: #262320;
+            --bg-card: #2C2925;
+            --bg-card-alt: #302D28;
+            --text-primary: #E8E0D5;
+            --text-secondary: #C4B9A8;
+            --text-muted: #9B8E7C;
+            --accent-yellow: #F0B840;
+            --accent-yellow-hover: #E0A830;
+            --accent-green: #7BA886;
+            --accent-green-hover: #6A9474;
+            --brick: #D0896A;
+            --brick-dark: #B87050;
+            --border-color: #3E3830;
+            --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.40);
+            --shadow-button: 0 4px 20px rgba(220, 160, 60, 0.45);
+            --shadow-button-green: 0 4px 22px rgba(110, 150, 120, 0.40);
+            --overlay: rgba(8, 6, 4, 0.72);
+            --header-bg: rgba(30, 28, 26, 0.90);
+            --header-blur: blur(22px);
+            --star-color: #F0B840;
+            --star-empty: #4A4238;
+            --ripple-color: rgba(255, 255, 255, 0.35);
+            --input-bg: #2C2925;
+            --input-border: #4A4238;
+            --input-focus: #D0896A;
+            --modal-bg: #2C2925;
+            --badge-bg: #302D28;
+            --brick-pattern-opacity: 0.06;
+            --hero-overlay-start: rgba(8, 6, 4, 0.55);
+            --hero-overlay-end: rgba(8, 6, 4, 0.78);
+        }
+
+        /* === СБРОС И БАЗОВЫЕ СТИЛИ === */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: 'Nunito Sans', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.45s ease, color 0.45s ease;
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Лёгкая кирпичная текстура на фоне (едва заметная) */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: var(--brick-pattern-opacity);
+            background-image: repeating-linear-gradient(0deg,
+                    transparent,
+                    transparent 18px,
+                    rgba(180, 100, 60, 0.25) 18px,
+                    rgba(180, 100, 60, 0.25) 19px),
+                repeating-linear-gradient(90deg,
+                    transparent,
+                    transparent 58px,
+                    rgba(180, 100, 60, 0.18) 58px,
+                    rgba(180, 100, 60, 0.18) 59px);
+            transition: opacity 0.45s ease;
+        }
+
+        /* === ТИПОГРАФИКА === */
+        h1,
+        h2,
+        h3,
+        .section-title,
+        .nav-link,
+        .logo,
+        .category-tab,
+        .hero-title,
+        .menu-item-name {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: clamp(2.4rem, 5vw, 3.8rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+        }
+        h2 {
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            letter-spacing: -0.01em;
+        }
+        .section-title {
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            text-align: center;
+            margin-bottom: 0.6rem;
+            position: relative;
+            display: inline-block;
+        }
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            margin-bottom: 3rem;
+        }
+
+        /* === HEADER (STICKY) === */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--header-bg);
+            backdrop-filter: var(--header-blur);
+            -webkit-backdrop-filter: var(--header-blur);
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.45s ease;
+            padding: 0 2rem;
+        }
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+        .logo {
+            font-size: 1.55rem;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            color: var(--brick);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: color 0.3s;
+        }
+        .logo:hover {
+            color: var(--brick-dark);
+        }
+        .logo-icon {
+            font-size: 1.8rem;
+        }
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            position: relative;
+            cursor: pointer;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0%;
+            height: 2.5px;
+            background: var(--accent-yellow);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--text-primary);
+        }
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* Кнопка темы */
+        .theme-toggle {
+            background: var(--bg-card-alt);
+            border: 2px solid var(--border-color);
+            cursor: pointer;
+            font-size: 1.4rem;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.35s ease;
+            color: var(--text-primary);
+            flex-shrink: 0;
+            position: relative;
+        }
+        .theme-toggle:hover {
+            border-color: var(--accent-yellow);
+            box-shadow: 0 0 18px rgba(232, 168, 56, 0.3);
+            transform: rotate(15deg);
+        }
+        .theme-toggle:active {
+            transform: scale(0.9) rotate(15deg);
+        }
+        .theme-toggle .icon-sun,
+        .theme-toggle .icon-moon {
+            transition: opacity 0.3s ease, transform 0.4s ease;
+            position: absolute;
+        }
+        [data-theme="light"] .theme-toggle .icon-moon {
+            opacity: 1;
+            transform: rotate(0deg);
+        }
+        [data-theme="light"] .theme-toggle .icon-sun {
+            opacity: 0;
+            transform: rotate(90deg);
+        }
+        [data-theme="dark"] .theme-toggle .icon-moon {
+            opacity: 0;
+            transform: rotate(-90deg);
+        }
+        [data-theme="dark"] .theme-toggle .icon-sun {
+            opacity: 1;
+            transform: rotate(0deg);
+        }
+
+        /* Бургер-меню (мобильная версия) */
+        .burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 6px;
+            z-index: 1001;
+        }
+        .burger span {
+            width: 26px;
+            height: 3px;
+            background: var(--text-primary);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        /* === ОСНОВНОЙ КОНТЕЙНЕР === */
+        .main-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* === СЕКЦИИ === */
+        .section {
+            padding: 5rem 0;
+            scroll-margin-top: 80px;
+        }
+        .section-divider {
+            width: 80px;
+            height: 4px;
+            background: var(--accent-yellow);
+            margin: 0 auto 3rem;
+            border-radius: 2px;
+        }
+
+        /* === HERO / ГЛАВНАЯ === */
+        .hero {
+            position: relative;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            border-radius: 20px;
+            margin: 2rem 0 0;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: background-image 1.2s ease-in-out;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg,
+                    var(--hero-overlay-start) 0%,
+                    var(--hero-overlay-end) 100%);
+            z-index: 1;
+            border-radius: 20px;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: #fff;
+            padding: 2rem;
+            max-width: 700px;
+        }
+        .hero-title {
+            font-size: clamp(2.6rem, 6vw, 4.2rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+        }
+        .hero-subtitle {
+            font-size: clamp(1.05rem, 2vw, 1.35rem);
+            font-weight: 400;
+            opacity: 0.9;
+            margin-bottom: 2.5rem;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+            letter-spacing: 0.02em;
+        }
+        .hero-dots {
+            position: absolute;
+            bottom: 28px;
+            z-index: 3;
+            display: flex;
+            gap: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .hero-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+        }
+        .hero-dot.active {
+            background: var(--accent-yellow);
+            border-color: #fff;
+            box-shadow: 0 0 14px rgba(232, 168, 56, 0.7);
+            transform: scale(1.25);
+        }
+
+        /* === КНОПКИ === */
+        .btn {
+            display: inline-block;
+            padding: 0.85rem 2.2rem;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            outline: none;
+            user-select: none;
+        }
+        .btn:active {
+            transform: scale(0.95);
+        }
+        .btn-yellow {
+            background: var(--accent-yellow);
+            color: #1E1C1A;
+            box-shadow: var(--shadow-button);
+        }
+        .btn-yellow:hover {
+            background: var(--accent-green);
+            color: #fff;
+            box-shadow: var(--shadow-button-green);
+            transform: translateY(-2px);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #fff;
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+        .btn-outline:hover {
+            background: #fff;
+            color: #1E1C1A;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(255, 255, 255, 0.35);
+        }
+        .btn-sm {
+            padding: 0.55rem 1.4rem;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            border-radius: 40px;
+        }
+        .btn-dark-sm {
+            background: var(--bg-card-alt);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+            box-shadow: none;
+        }
+        .btn-dark-sm:hover {
+            background: var(--accent-green);
+            color: #fff;
+            border-color: var(--accent-green);
+            box-shadow: var(--shadow-button-green);
+            transform: translateY(-2px);
+        }
+
+        /* Ripple effect */
+        .btn-ripple {
+            position: relative;
+            overflow: hidden;
+        }
+        .ripple-effect {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--ripple-color);
+            transform: scale(0);
+            animation: ripple-anim 0.7s ease-out forwards;
+            pointer-events: none;
+        }
+        @keyframes ripple-anim {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* === БЛОК "ПОЧЕМУ МЫ" === */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.2rem 1.8rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            box-shadow: var(--shadow-card);
+            position: relative;
+            overflow: hidden;
+        }
+        .feature-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+            border-color: var(--accent-yellow);
+        }
+        .feature-icon {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        .feature-card h3 {
+            font-size: 1.15rem;
+            margin-bottom: 0.4rem;
+        }
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* === МЕНЮ И ЦЕНЫ === */
+        .categories-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+        }
+        .category-tab {
+            padding: 0.7rem 2rem;
+            border-radius: 50px;
+            background: var(--bg-card-alt);
+            border: 2px solid var(--border-color);
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            transition: all 0.35s ease;
+            color: var(--text-secondary);
+            user-select: none;
+        }
+        .category-tab:hover {
+            border-color: var(--accent-yellow);
+            color: var(--text-primary);
+        }
+        .category-tab.active {
+            background: var(--accent-yellow);
+            border-color: var(--accent-yellow);
+            color: #1E1C1A;
+            box-shadow: var(--shadow-button);
+            transform: translateY(-2px);
+        }
+        .category-tab:active {
+            transform: scale(0.95);
+        }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        .menu-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+        }
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 18px 44px rgba(0, 0, 0, 0.22);
+            border-color: var(--accent-yellow);
+        }
+        .menu-card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            background: var(--bg-secondary);
+        }
+        .menu-card-body {
+            padding: 1.3rem 1.4rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        .menu-item-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+        .menu-item-desc {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .menu-item-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.8rem;
+        }
+        .menu-item-price {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.35rem;
+            color: var(--brick);
+            letter-spacing: -0.01em;
+            white-space: nowrap;
+        }
+        .menu-category-content {
+            display: none;
+            animation: fadeSlideIn 0.45s ease;
+        }
+        .menu-category-content.active {
+            display: grid;
+        }
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* === ОТЗЫВЫ === */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+        .review-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.8rem;
+            box-shadow: var(--shadow-card);
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .review-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 36px rgba(0, 0, 0, 0.20);
+        }
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .review-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--brick);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .review-name {
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+        .review-stars {
+            color: var(--star-color);
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+        }
+        .review-text {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            font-style: italic;
+        }
+        .reviews-cta {
+            text-align: center;
+        }
+
+        /* === POPUP (МОДАЛЬНОЕ ОКНО) === */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--overlay);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal {
+            background: var(--modal-bg);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            max-width: 460px;
+            width: 90%;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.35s ease;
+            text-align: center;
+        }
+        .modal-overlay.open .modal {
+            transform: translateY(0);
+        }
+        .modal-close {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            background: none;
+            border: none;
+            font-size: 1.6rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: color 0.3s, transform 0.3s;
+            line-height: 1;
+        }
+        .modal-close:hover {
+            color: var(--brick);
+            transform: rotate(90deg);
+        }
+        .modal-close:active {
+            transform: scale(0.85) rotate(90deg);
+        }
+        .modal h3 {
+            margin-bottom: 1.2rem;
+            font-size: 1.5rem;
+        }
+        .form-group {
+            margin-bottom: 1.2rem;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.35rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            border: 2px solid var(--input-border);
+            background: var(--input-bg);
+            color: var(--text-primary);
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 0.95rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            resize: vertical;
+            outline: none;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--input-focus);
+            box-shadow: 0 0 0 4px rgba(198, 123, 92, 0.12);
+        }
+        .form-group textarea {
+            min-height: 100px;
+        }
+        .thank-you-animation {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            animation: popIn 0.5s ease;
+        }
+        .thank-you-animation.show {
+            display: flex;
+        }
+        .thank-you-check {
+            font-size: 4rem;
+            animation: bounceCheck 0.7s ease;
+        }
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.7);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        @keyframes bounceCheck {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.3);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* === FOOTER === */
+        .site-footer {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+            background: var(--bg-secondary);
+            transition: background 0.45s ease;
+        }
+        .site-footer strong {
+            color: var(--text-primary);
+        }
+
+        /* === АДАПТИВ === */
+        @media (max-width: 768px) {
+            .header-inner {
+                height: 60px;
+            }
+            .nav {
+                position: fixed;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: var(--header-bg);
+                backdrop-filter: var(--header-blur);
+                -webkit-backdrop-filter: var(--header-blur);
+                flex-direction: column;
+                padding: 1.5rem 2rem;
+                gap: 1.2rem;
+                border-bottom: 2px solid var(--border-color);
+                transform: translateY(-120%);
+                transition: transform 0.4s ease;
+                z-index: 999;
+            }
+            .nav.open {
+                transform: translateY(0);
+            }
+            .burger {
+                display: flex;
+            }
+            .hero {
+                min-height: 65vh;
+                border-radius: 14px;
+                margin-top: 1rem;
+            }
+            .hero::before {
+                border-radius: 14px;
+            }
+            .section {
+                padding: 3rem 0;
+            }
+            .main-content {
+                padding: 0 1rem;
+            }
+            .reviews-grid {
+                grid-template-columns: 1fr;
+            }
+            .menu-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+            .menu-card-img {
+                height: 150px;
+            }
+        }
+        @media (max-width: 480px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .categories-tabs {
+                gap: 0.4rem;
+            }
+            .category-tab {
+                padding: 0.55rem 1.2rem;
+                font-size: 0.78rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== HEADER ========== -->
+    <header class="site-header" id="siteHeader">
+        <div class="header-inner">
+            <a href="#home" class="logo">
+                <span class="logo-icon">🏗️</span> Loft
+            </a>
+            <nav class="nav" id="mainNav">
+                <a href="#home" class="nav-link active" data-section="home">Главная</a>
+                <a href="#menu" class="nav-link" data-section="menu">Меню и цены</a>
+                <a href="#reviews" class="nav-link" data-section="reviews">Отзывы</a>
+            </nav>
+            <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему" title="День / Ночь">
+                <span class="icon-sun">☀️</span>
+                <span class="icon-moon">🌙</span>
+            </button>
+            <button class="burger" id="burgerBtn" aria-label="Меню">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <div class="main-content">
+
+        <!-- СЕКЦИЯ: ГЛАВНАЯ (HERO) -->
+        <section class="section hero" id="home">
+            <div class="hero-content">
+                <h1 class="hero-title">Вкус, рожденный<br>в атмосфере</h1>
+                <p class="hero-subtitle">Авторская кухня и specialty coffee в самом сердце Старых Атаг</p>
+                <a href="#menu" class="btn btn-yellow btn-ripple">Смотреть меню</a>
+            </div>
+            <div class="hero-dots" id="heroDots">
+                <span class="hero-dot active" data-index="0"></span>
+                <span class="hero-dot" data-index="1"></span>
+                <span class="hero-dot" data-index="2"></span>
+                <span class="hero-dot" data-index="3"></span>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ: ПОЧЕМУ МЫ -->
+        <section class="section" id="why-us">
+            <div style="text-align:center;">
+                <h2 class="section-title">Почему мы</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🥬</span>
+                    <h3>Свежие продукты</h3>
+                    <p>Каждое утро мы получаем фермерские овощи, мясо и молочные продукты из локальных хозяйств.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🛋️</span>
+                    <h3>Уютный интерьер</h3>
+                    <p>Кирпичные стены, лампы Эдисона, живые растения — пространство, в котором хочется остаться.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🤲</span>
+                    <h3>Приготовлено с душой</h3>
+                    <p>Шеф-повар знает каждого гостя в лицо. Каждое блюдо — авторская импровизация и внимание к деталям.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ: МЕНЮ И ЦЕНЫ -->
+        <section class="section" id="menu">
+            <div style="text-align:center;">
+                <h2 class="section-title">Меню и цены</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="categories-tabs" id="categoryTabs">
+                <button class="category-tab active" data-category="breakfast">Завтраки</button>
+                <button class="category-tab" data-category="hot">Горячее</button>
+                <button class="category-tab" data-category="coffee">Кофе</button>
+            </div>
+            <!-- Завтраки -->
+            <div class="menu-category-content active menu-grid" id="cat-breakfast">
+                <!-- Карточки будут сгенерированы JS -->
+            </div>
+            <!-- Горячее -->
+            <div class="menu-category-content menu-grid" id="cat-hot">
+            </div>
+            <!-- Кофе -->
+            <div class="menu-category-content menu-grid" id="cat-coffee">
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ: ОТЗЫВЫ -->
+        <section class="section" id="reviews">
+            <div style="text-align:center;">
+                <h2 class="section-title">Отзывы гостей</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="reviews-grid" id="reviewsContainer">
+                <!-- Отзывы генерируются JS -->
+            </div>
+            <div class="reviews-cta">
+                <button class="btn btn-dark-sm btn-ripple" id="openReviewModal">✎ Оставить отзыв</button>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="site-footer">
+        <p>© 2024 Кафе <strong>«Loft»</strong> &nbsp;·&nbsp; с. Старые Атаги &nbsp;·&nbsp; Работаем с любовью каждый день</p>
+    </footer>
+
+    <!-- ========== МОДАЛЬНОЕ ОКНО (ОСТАВИТЬ ОТЗЫВ) ========== -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="reviewModal">
+            <button class="modal-close" id="modalClose">✕</button>
+            <!-- Форма -->
+            <div id="modalFormContent">
+                <h3>Ваш отзыв</h3>
+                <form id="reviewForm" novalidate>
+                    <div class="form-group">
+                        <label for="reviewName">Ваше имя</label>
+                        <input type="text" id="reviewName" placeholder="Например, Аслан" required maxlength="30">
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewText">Текст отзыва</label>
+                        <textarea id="reviewText" placeholder="Поделитесь впечатлениями..." required maxlength="500"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-yellow btn-ripple" style="width:100%;">Отправить</button>
+                </form>
+            </div>
+            <!-- Анимация благодарности -->
+            <div class="thank-you-animation" id="thankYouBlock">
+                <span class="thank-you-check">✅</span>
+                <h3>Спасибо!</h3>
+                <p style="color:var(--text-secondary);">Ваш отзыв появится на сайте после модерации.</p>
+                <button class="btn btn-outline" id="thankYouClose" style="color:var(--text-primary);border-color:var(--border-color);">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ============ ДАННЫЕ МЕНЮ ============
+            const menuData = {
+                breakfast: [
+                    { name: 'Сырники с ягодами', desc: 'Нежные творожные сырники с сезонными ягодами и сметаной.',
+                        price: '380 ₽', img: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=400&h=280&fit=crop' },
+                    { name: 'Омлет с томатами', desc: 'Пышный омлет из трёх яиц с вялеными томатами и зеленью.',
+                        price: '290 ₽', img: 'https://images.unsplash.com/photo-1510693206972-df098062cb71?w=400&h=280&fit=crop' },
+                    { name: 'Гранола с мёдом', desc: 'Хрустящая гранола с греческим йогуртом, мёдом и орехами.', price: '350 ₽',
+                        img: 'https://images.unsplash.com/photo-1517093918819-2b1a5e9b0b1b?w=400&h=280&fit=crop' },
+                    { name: 'Тосты с авокадо', desc: 'Цельнозерновой хлеб, авокадо, яйцо-пашот и микрозелень.',
+                        price: '420 ₽', img: 'https://images.unsplash.com/photo-1603046891744-1f75a0a0a5b5?w=400&h=280&fit=crop' },
+                ],
+                hot: [
+                    { name: 'Паста Карбонара', desc: 'Спагетти с беконом, сливочным соусом и пармезаном.', price: '520 ₽',
+                        img: 'https://images.unsplash.com/photo-1612874742237-6526221588e3?w=400&h=280&fit=crop' },
+                    { name: 'Стейк из лосося', desc: 'Норвежский лосось на гриле с овощным рататуем.', price: '780 ₽',
+                        img: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=400&h=280&fit=crop' },
+                    { name: 'Томлёная говядина', desc: 'Говяжьи щёчки в красном вине с картофельным пюре.',
+                        price: '650 ₽', img: 'https://images.unsplash.com/photo-1603073163308-9654c3fb70b5?w=400&h=280&fit=crop' },
+                    { name: 'Куриный шницель', desc: 'Хрустящий шницель с дольками запечённого картофеля.',
+                        price: '480 ₽', img: 'https://images.unsplash.com/photo-1569058242567-93de6f36f8e6?w=400&h=280&fit=crop' },
+                ],
+                coffee: [
+                    { name: 'Капучино', desc: 'Классический капучино на эспрессо с бархатной пенкой.', price: '250 ₽',
+                        img: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400&h=280&fit=crop' },
+                    { name: 'Латте на кокосовом', desc: 'Мягкий латте с кокосовым молоком и карамельным сиропом.',
+                        price: '320 ₽', img: 'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?w=400&h=280&fit=crop' },
+                    { name: 'Раф лавандовый', desc: 'Нежный раф-кофе с лавандой — визитная карточка кафе.',
+                        price: '350 ₽', img: 'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=400&h=280&fit=crop' },
+                    { name: 'Эспрессо доппио', desc: 'Двойной эспрессо из свежеобжаренных зёрен.', price: '180 ₽',
+                        img: 'https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?w=400&h=280&fit=crop' },
+                ]
+            };
+
+            // ============ ДАННЫЕ ОТЗЫВОВ ============
+            const reviewsData = [
+                { name: 'Аслан', text: 'Лучшее кафе в округе! Завтракаю здесь каждую субботу. Сырники — как в детстве у бабушки.',
+                    stars: 5 },
+                { name: 'Марьям', text: 'Очень уютно, приятная музыка, приветливый персонал. Кофе просто волшебный.',
+                    stars: 5 },
+                { name: 'Мадина',
+                    text: 'Приезжали с семьёй из города. Интерьер впечатлил — настоящий лофт с душой. Обязательно вернёмся!',
+                    stars: 4 },
+            ];
+
+            // ============ DOM-ЭЛЕМЕНТЫ ============
+            const html = document.documentElement;
+            const themeToggle = document.getElementById('themeToggle');
+            const burgerBtn = document.getElementById('burgerBtn');
+            const mainNav = document.getElementById('mainNav');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const categoryTabs = document.getElementById('categoryTabs');
+            const catBreakfast = document.getElementById('cat-breakfast');
+            const catHot = document.getElementById('cat-hot');
+            const catCoffee = document.getElementById('cat-coffee');
+            const reviewsContainer = document.getElementById('reviewsContainer');
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalClose = document.getElementById('modalClose');
+            const openReviewModal = document.getElementById('openReviewModal');
+            const reviewForm = document.getElementById('reviewForm');
+            const modalFormContent = document.getElementById('modalFormContent');
+            const thankYouBlock = document.getElementById('thankYouBlock');
+            const thankYouClose = document.getElementById('thankYouClose');
+            const heroDots = document.getElementById('heroDots');
+            const heroSection = document.getElementById('home');
+
+            // ============ HERO СЛАЙДЕР ============
+            const heroImages = [
+                'https://images.unsplash.com/photo-1552566626-52f8b828add9?w=1400&h=900&fit=crop', // интерьер лофт
+                'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=1400&h=900&fit=crop', // кофе
+                'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1400&h=900&fit=crop', // еда
+                'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=1400&h=900&fit=crop', // интерьер с растениями
+            ];
+            let currentSlide = 0;
+            let slideInterval;
+            const heroDotsAll = document.querySelectorAll('.hero-dot');
+
+            function setHeroSlide(index) {
+                currentSlide = index;
+                heroSection.style.backgroundImage = `url('${heroImages[index]}')`;
+                heroDotsAll.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                });
+            }
+
+            function nextSlide() {
+                setHeroSlide((currentSlide + 1) % heroImages.length);
+            }
+
+            function startSlideShow() {
+                stopSlideShow();
+                slideInterval = setInterval(nextSlide, 4200);
+            }
+
+            function stopSlideShow() {
+                clearInterval(slideInterval);
+            }
+            setHeroSlide(0);
+            startSlideShow();
+            heroDots.addEventListener('click', (e) => {
+                const dot = e.target.closest('.hero-dot');
+                if (!dot) return;
+                const index = parseInt(dot.getAttribute('data-index'));
+                setHeroSlide(index);
+                stopSlideShow();
+                startSlideShow();
+            });
+            heroSection.addEventListener('mouseenter', stopSlideShow);
+            heroSection.addEventListener('mouseleave', startSlideShow);
+            // touch swipe
+            let touchStartX = 0;
+            heroSection.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX;
+                stopSlideShow(); });
+            heroSection.addEventListener('touchend', (e) => {
+                const diff = touchStartX - e.changedTouches[0].clientX;
+                if (Math.abs(diff) > 50) {
+                    if (diff > 0) setHeroSlide((currentSlide + 1) % heroImages.length);
+                    else setHeroSlide((currentSlide - 1 + heroImages.length) % heroImages.length);
+                }
+                startSlideShow();
+            });
+
+            // ============ ТЕМА ДЕНЬ/НОЧЬ ============
+            function applyTheme(theme) {
+                html.setAttribute('data-theme', theme);
+                localStorage.setItem('loft-theme', theme);
+            }
+            const savedTheme = localStorage.getItem('loft-theme') || 'light';
+            applyTheme(savedTheme);
+            themeToggle.addEventListener('click', () => {
+                const newTheme = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+                applyTheme(newTheme);
+            });
+
+            // ============ BURGER-МЕНЮ ============
+            burgerBtn.addEventListener('click', () => {
+                mainNav.classList.toggle('open');
+            });
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mainNav.classList.remove('open');
+                });
+            });
+            document.addEventListener('click', (e) => {
+                if (!mainNav.contains(e.target) && !burgerBtn.contains(e.target) && mainNav.classList
+                    .contains('open')) {
+                    mainNav.classList.remove('open');
+                }
+            });
+
+            // ============ АКТИВНАЯ ССЫЛКА ПРИ СКРОЛЛЕ ============
+            const sections = {
+                home: document.getElementById('home'),
+                menu: document.getElementById('menu'),
+                reviews: document.getElementById('reviews'),
+            };
+
+            function updateActiveNav() {
+                let currentId = 'home';
+                const scrollPos = window.scrollY + 120;
+                for (const [id, el] of Object.entries(sections)) {
+                    if (el && el.offsetTop <= scrollPos) {
+                        currentId = id;
+                    }
+                }
+                navLinks.forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('data-section') === currentId);
+                });
+            }
+            window.addEventListener('scroll', updateActiveNav, { passive: true });
+            updateActiveNav();
+
+            // ============ РЕНДЕР МЕНЮ ============
+            function createMenuCard(item) {
+                const card = document.createElement('div');
+                card.className = 'menu-card';
+                card.innerHTML = `
+                    <img src="${item.img}" alt="${item.name}" class="menu-card-img" loading="lazy" onerror="this.style.background='var(--bg-secondary)';this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22280%22><rect fill=%22%23ccc%22 width=%22400%22 height=%22280%22/><text x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 font-size=%2220%22 fill=%22%23888%22>Изображение</text></svg>';">
+                    <div class="menu-card-body">
+                        <h3 class="menu-item-name">${item.name}</h3>
+                        <p class="menu-item-desc" title="${item.desc}">${item.desc}</p>
+                        <div class="menu-item-footer">
+                            <span class="menu-item-price">${item.price}</span>
+                            <button class="btn btn-sm btn-dark-sm btn-ripple">Заказать</button>
+                        </div>
+                    </div>
+                `;
+                return card;
+            }
+
+            function renderMenuCategory(category, container) {
+                container.innerHTML = '';
+                if (menuData[category]) {
+                    menuData[category].forEach(item => {
+                        container.appendChild(createMenuCard(item));
+                    });
+                }
+            }
+            renderMenuCategory('breakfast', catBreakfast);
+            renderMenuCategory('hot', catHot);
+            renderMenuCategory('coffee', catCoffee);
+
+            // Переключение вкладок меню
+            const allMenuContents = document.querySelectorAll('.menu-category-content');
+            categoryTabs.addEventListener('click', (e) => {
+                const tab = e.target.closest('.category-tab');
+                if (!tab) return;
+                const category = tab.getAttribute('data-category');
+                // Обновляем активную вкладку
+                document.querySelectorAll('.category-tab').forEach(t => t.classList.remove(
+                'active'));
+                tab.classList.add('active');
+                tab.style.transform = 'scale(0.95)';
+                setTimeout(() => { tab.style.transform = ''; }, 150);
+                // Показываем нужный контент
+                allMenuContents.forEach(c => c.classList.remove('active'));
+                const target = document.getElementById('cat-' + category);
+                if (target) {
+                    target.classList.add('active');
+                    // ре-рендерим для анимации
+                    renderMenuCategory(category, target);
+                }
+            });
+
+            // ============ РЕНДЕР ОТЗЫВОВ ============
+            function renderReviews() {
+                reviewsContainer.innerHTML = '';
+                reviewsData.forEach(review => {
+                    const card = document.createElement('div');
+                    card.className = 'review-card';
+                    const initials = review.name.charAt(0).toUpperCase();
+                    const fullStars = '★'.repeat(review.stars) + '☆'.repeat(5 - review.stars);
+                    card.innerHTML = `
+                        <div class="review-header">
+                            <div class="review-avatar">${initials}</div>
+                            <div>
+                                <div class="review-name">${review.name}</div>
+                                <div class="review-stars">${fullStars}</div>
+                            </div>
+                        </div>
+                        <p class="review-text">«${review.text}»</p>
+                    `;
+                    reviewsContainer.appendChild(card);
+                });
+            }
+            renderReviews();
+
+            // ============ МОДАЛЬНОЕ ОКНО ОТЗЫВА ============
+            function openModal() {
+                modalOverlay.classList.add('open');
+                modalFormContent.style.display = 'block';
+                thankYouBlock.classList.remove('show');
+                thankYouBlock.style.display = 'none';
+                reviewForm.reset();
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeModal() {
+                modalOverlay.classList.remove('open');
+                document.body.style.overflow = '';
+                // Сброс через небольшую задержку, чтобы анимация закрытия прошла
+                setTimeout(() => {
+                    modalFormContent.style.display = 'block';
+                    thankYouBlock.classList.remove('show');
+                    thankYouBlock.style.display = 'none';
+                }, 400);
+            }
+            openReviewModal.addEventListener('click', openModal);
+            modalClose.addEventListener('click', closeModal);
+            thankYouClose.addEventListener('click', closeModal);
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) closeModal();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modalOverlay.classList.contains('open')) closeModal();
+            });
+
+            // Отправка формы
+            reviewForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const nameInput = document.getElementById('reviewName');
+                const textInput = document.getElementById('reviewText');
+                const name = nameInput.value.trim();
+                const text = textInput.value.trim();
+                if (!name || !text) {
+                    // простая подсветка пустых полей
+                    if (!name) nameInput.style.borderColor = '#e05555';
+                    if (!text) textInput.style.borderColor = '#e05555';
+                    setTimeout(() => {
+                        nameInput.style.borderColor = '';
+                        textInput.style.borderColor = '';
+                    }, 2000);
+                    return;
+                }
+                // Добавляем отзыв в массив и перерендериваем
+                reviewsData.unshift({ name, text, stars: 5 });
+                renderReviews();
+                // Показываем анимацию благодарности
+                modalFormContent.style.display = 'none';
+                thankYouBlock.style.display = 'flex';
+                thankYouBlock.classList.add('show');
+            });
+
+            // ============ RIPPLE EFFECT НА ВСЕ КНОПКИ С КЛАССОМ btn-ripple ============
+            document.addEventListener('click', function(e) {
+                const rippleBtn = e.target.closest('.btn-ripple');
+                if (!rippleBtn) return;
+                // Находим позицию клика относительно кнопки
+                const rect = rippleBtn.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const ripple = document.createElement('span');
+                ripple.className = 'ripple-effect';
+                const size = Math.max(rect.width, rect.height);
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x - size / 2 + 'px';
+                ripple.style.top = y - size / 2 + 'px';
+                rippleBtn.appendChild(ripple);
+                ripple.addEventListener('animationend', () => {
+                    ripple.remove();
+                });
+            });
+
+            // ============ ПЛАВНЫЙ СКРОЛЛ ДЛЯ ЯКОРНЫХ ССЫЛОК (на всякий случай) ============
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href === '#') return;
+                    const target = document.querySelector(href);
+                    if (target) {
+                        e.preventDefault();
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+
+            console.log('🍽️ Кафе «Loft» — сайт готов. Приятного аппетита!');
+        })();
+    </script>
+</body>
+</html>
